@@ -6,22 +6,20 @@ set -eu
 # for etcd
 ETCD_VERSION=3.2.18
 ETCD_HOST1=k8s01
-ETCD_HOST2=k8s02
-ETCD_HOST3=k8s03
-ETCD_IP1=192.168.9.31
-ETCD_IP2=192.168.9.32
-ETCD_IP3=192.168.9.33
+ETCD_HOST2=k8s04
+ETCD_HOST3=k8s05
+ETCD_IP1=192.168.8.25
+ETCD_IP2=192.168.8.231
+ETCD_IP3=192.168.8.36
 ETCD_PKI_DIR=/etc/etcd/ssl
 
 # for K8S Master Nodes
 K8S_VERSION=v1.11.1
 K8S_MASTER_HOST1=k8s01
-K8S_MASTER_HOST2=k8s02
-K8S_MASTER_HOST3=k8s03
-K8S_MASTER_IP1=192.168.9.31
-K8S_MASTER_IP2=192.168.9.32
-K8S_MASTER_IP3=192.168.9.33
-K8S_MASTER_VIP=192.168.9.100
+K8S_MASTER_HOST2=k8s04
+K8S_MASTER_HOST3=k8s05
+K8S_MASTER_IP1=192.168.8.25
+K8S_MASTER_VIP=192.168.8.25
 K8S_MASTER_VIP_PORT=6443
 K8S_KUBE_APISERVER_ENTRY=https://${K8S_MASTER_VIP}:${K8S_MASTER_VIP_PORT}
 K8S_CLUSTER_SVC_IP=10.96.0.1
@@ -82,7 +80,7 @@ cfssl gencert \
   -ca=${K8S_PKI_DIR}/ca.pem \
   -ca-key=${K8S_PKI_DIR}/ca-key.pem \
   -config=ca-config.json \
-  -hostname=127.0.0.1,${K8S_CLUSTER_SVC_IP},${K8S_MASTER_HOST1},${K8S_MASTER_HOST2},${K8S_MASTER_HOST3},${K8S_MASTER_IP1},${K8S_MASTER_IP2},${K8S_MASTER_IP3},${K8S_MASTER_VIP},kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster.local \
+  -hostname=127.0.0.1,${K8S_CLUSTER_SVC_IP},${K8S_MASTER_HOST1},${K8S_MASTER_HOST2},${K8S_MASTER_HOST3},${K8S_MASTER_IP1},${K8S_MASTER_VIP},kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster.local \
   -profile=kubernetes \
   apiserver-csr.json | cfssljson -bare ${K8S_PKI_DIR}/apiserver
 
